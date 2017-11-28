@@ -131,6 +131,8 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/auth/login'
 
 HOST = 'http://localhost:8000/'
+if os.environ.get('HOST'):
+    HOST = os.environ.get('HOST')
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'umousee@gmail.com'
