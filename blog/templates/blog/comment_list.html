@@ -5,8 +5,11 @@
 </form>
 
 {% for comment in object_list %}
-
-    {{ comment.text }}
+    <br/>
+    <h5>{{comment.user }} at
+        {{comment.created_date}}
+        <h5/>
+        {{ comment.text}}
     <br />
 
 {% endfor %}

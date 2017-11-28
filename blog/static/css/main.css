@@ -1,0 +1,31 @@
+.body{
+    padding: 20px;
+}
+
+.post,.sort-form {
+    padding: 20px;
+    border: 1px gray solid;
+}
+
+.like.liked {
+    font-weight: bold;
+
+}
+
+.pagination {
+    padding:20px;
+
+}
+
+.page-links {
+    margin:auto;
+}
+
+#logout {
+    text-align:right;
+}
+
+.title,.text{
+    text-align:center;
+
+}

@@ -13,16 +13,25 @@ from blog.models import Post, Like, Comment
 class PostListView(FormMixin, ListView):
 
     model = Post
-    paginate_by = 2
+    paginate_by = 5
     form_class = SortingForm
 
     def get_queryset(self):
         keyword = self.request.session.get('keyword')
+        city = self.request.session.get('city')
+        country = self.request.session.get('country')
         filter_kwargs = {}
+        order_args = []
         if keyword:
             filter_kwargs['title__contains'] = keyword
+        if city!='0':
+            sign = '-' if city=='-1' else ''
+            order_args.append(sign+'author__city')
+        if country!='0':
+            sign = '-' if country=='-1' else ''
+            order_args.append(sign+'author__country')
 
-        return self.model.objects.filter(**filter_kwargs)
+        return self.model.objects.filter(**filter_kwargs).order_by(*order_args)
 
     def get_success_url(self):
         return reverse('postlist')
@@ -31,6 +40,8 @@ class PostListView(FormMixin, ListView):
         context = super(PostListView, self).get_context_data(**kwargs)
         form = self.get_form()
         form.fields['keyword'].initial = self.request.session.get('keyword')
+        form.fields['city'].initial = self.request.session.get('city')
+        form.fields['country'].initial = self.request.session.get('country')
         context['form'] = form
         return context
 
@@ -38,6 +49,8 @@ class PostListView(FormMixin, ListView):
         form = self.get_form()
         if form.is_valid():
             self.request.session['keyword'] = form.data['keyword']
+            self.request.session['city'] = form.data['city']
+            self.request.session['country'] = form.data['country']
 
 
             return self.form_valid(form)
@@ -64,11 +77,11 @@ class  PostDetailsView(DetailView):
 
 class PostCommentsView(FormMixin, ListView):
     model = Comment
-    paginate_by = 2
+    paginate_by = 5
     form_class = CreateCommentForm
 
     def get_queryset(self):
-        return Comment.objects.filter(post_id=self.kwargs['pk'])
+        return Comment.objects.filter(post_id=self.kwargs['pk']).order_by('-created_date')
 
     def get_success_url(self):
          return reverse('post_details', kwargs={'pk':self.kwargs['pk']})

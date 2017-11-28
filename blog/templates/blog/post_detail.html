@@ -20,16 +20,42 @@
 {% endblock title %}
 
 {% block content %}
-{{post.author.email}}
-{{post.author.country}}
-{{post.author.city}}
-{{post.title}}
-{{post.text}}
-{{post.creation_date}}
-{{post.likes}}
 
-<div id="comments">
-    Comments:
-    <div id="comments-list"></div>
+<div class="body">
+    <div class="email">
+        Email:
+        {{post.author.email}}
+    </div>
+    <div class="country">
+         Country:
+        {{post.author.country}}
+    </div>
+    <div class="city">
+         City:
+        {{post.author.city}}
+    </div>
+    <div class="title">
+        <h4>{{post.title}}</h4>
+    </div>
+    <div class="text">
+        <p>{{post.text}}</p>
+    </div>
+    <div class="creation-date">
+         Creation date:
+        {{post.created_date}}
+    </div>
+    <div class="likes">
+         Likes:
+        {{post.likes}}
+    </div>
+
+
+    <div id="comments">
+        <br/>
+        <h4>Comments:</h4>
+        <br/>
+        <div id="comments-list"></div>
+    </div>
 </div>
+
 {% endblock content %}

@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 
 {%load staticfiles%}
+{%load likes%}
 
 {% block title %}
     Posts
@@ -8,19 +9,27 @@
 
 {% block content %}
 
-<form action="" method="post">{% csrf_token %}
+<form class="sort-form" action="" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Search" />
 </form>
-
 {% for post in object_list %}
+    <div class="post">
+        <div>
+            <a href="{% url 'post_details' post.id %}">{{ post.title }}</a>
+        </div>
+        <div>
+            {{ post.text }}
+        </div>
+        <div>
+            {% is_liked post request.user as liked %}
+            <button class="like {% if liked %}liked{% endif %}" data-post-id="{{post.id}}" type="button">Like {{ post.likes }}</button>
+        </div>
 
-    <a href="{% url 'post_details' post.id %}">{{ post.title }}</a>
-    {{ post.text }}
-    <button class="like" data-post-id="{{post.id}}" type="button">Like {{ post.likes }}</button>
-    <br />
-
+    </div>
 {% endfor %}
+
+
 
 {% if is_paginated %}
         <div class="pagination">

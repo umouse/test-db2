@@ -8,6 +8,7 @@
     <title>{% block title %}test{% endblock title %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -19,7 +20,8 @@
                 url: "{% url 'like' %}",
                 data: {'post_id': post_id,'csrfmiddlewaretoken':'{{ csrf_token }}' },
                 success: function (response) {
-                    button.text('Like ' + response)
+                    button.text('Like ' + response);
+                    button.toggleClass('liked');
                 },
                 error: function (response) {
                     alert(response.responseText);
@@ -35,8 +37,9 @@
 
 </head>
 <body>
-
-<a href="{% url 'logout' %}">Logout</a>
+<div id = 'logout'>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
 
 {% block content %}
 {% endblock content %}
