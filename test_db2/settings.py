@@ -25,7 +25,7 @@ SECRET_KEY = 'd3vhuw_w*7qndx0cfin6m4#2*&*g#q2a5nt_q4#o(#xi&xy=ea'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','umouse-test-db2.herokuapp.com']
 
 
 # Application definition
