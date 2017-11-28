@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+    <title>{% block title %}test{% endblock title %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $( 'button.like').click(function(){
+                var post_id = $(this).data('post-id');
+                var button = $(this);
+                  $.ajax({
+                type: 'POST',
+                url: "{% url 'like' %}",
+                data: {'post_id': post_id,'csrfmiddlewaretoken':'{{ csrf_token }}' },
+                success: function (response) {
+                    button.text('Like ' + response)
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            })
+            });
+        });
+
+    </script>
+
+
+    {% block extra_head %}{% endblock extra_head %}
+
+</head>
+<body>
+
+<a href="{% url 'logout' %}">Logout</a>
+
+{% block content %}
+{% endblock content %}
+
+
+</body>
+</html>
